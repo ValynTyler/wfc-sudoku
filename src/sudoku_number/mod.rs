@@ -13,6 +13,25 @@ pub enum SudokuNumber {
     _9,
 }
 
+impl TryFrom::<u8> for SudokuNumber {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            1 => Ok(Self::_1),
+            2 => Ok(Self::_2),
+            3 => Ok(Self::_3),
+            4 => Ok(Self::_4),
+            5 => Ok(Self::_5),
+            6 => Ok(Self::_6),
+            7 => Ok(Self::_7),
+            8 => Ok(Self::_8),
+            9 => Ok(Self::_9),
+            _ => Err(()),
+        }
+    }
+}
+
 impl Display for SudokuNumber {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
