@@ -7,12 +7,12 @@ pub struct SudokuGrid(pub [[SudokuCell; 9]; 9]);
 impl SudokuGrid {
     pub fn set_cell(
         &mut self,
-        col: usize,
         row: usize,
+        col: usize,
         value: Option<SudokuNumber>
     ) {
-        let col = (col - 1) % 9;
-        let row = (row - 1) % 9;
+        let col = col % 9;
+        let row = row % 9;
 
         self.0[row][col] = SudokuCell(value);
     }
