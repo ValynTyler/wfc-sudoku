@@ -1,4 +1,4 @@
-use wfc_sudoku::{cell, sudoku_grid::SudokuGrid, sudoku_number::SudokuNumber};
+use wfc_sudoku::{cell, sudoku::grid::SudokuGrid, sudoku::number::SudokuNumber};
 
 fn main() {
     let mut grid = SudokuGrid::default();

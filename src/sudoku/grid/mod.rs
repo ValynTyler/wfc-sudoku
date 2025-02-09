@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::{sudoku_cell::SudokuCell, sudoku_number::SudokuNumber};
+use super::{cell::SudokuCell, number::SudokuNumber};
 
 pub struct SudokuGrid(pub [[SudokuCell; 9]; 9]);
 

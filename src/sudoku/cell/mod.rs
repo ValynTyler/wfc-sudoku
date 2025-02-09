@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::sudoku_number::SudokuNumber;
+use super::number::SudokuNumber;
 
 #[derive(Clone, Copy)]
 pub struct SudokuCell(pub Option<SudokuNumber>);
