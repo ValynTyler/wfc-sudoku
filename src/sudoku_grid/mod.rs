@@ -1,8 +1,18 @@
 use std::fmt::Display;
 
-use crate::sudoku_cell::SudokuCell;
+use crate::{sudoku_cell::SudokuCell, sudoku_number::SudokuNumber};
 
 pub struct SudokuGrid(pub [[SudokuCell; 9]; 9]);
+
+impl SudokuGrid {
+    pub fn set_cell(&mut self, pos: (usize, usize), value: u8) -> Result<(), ()> {
+        self.0[pos.1 - 1][pos.0 - 1] = SudokuCell(Some(
+            SudokuNumber::try_from(value)?
+        ));
+
+        Ok(())
+    }
+}
 
 impl Default for SudokuGrid {
     fn default() -> Self {
