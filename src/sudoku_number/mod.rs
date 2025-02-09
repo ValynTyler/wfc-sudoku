@@ -1,3 +1,4 @@
+#[derive(Clone, Copy)]
 pub enum SudokuNumber {
     _1,
     _2,
