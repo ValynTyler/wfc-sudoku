@@ -1,1 +1,3 @@
-pub struct SudokuCell(pub Option<u8>);
+use crate::sudoku_number::SudokuNumber;
+
+pub struct SudokuCell(pub Option<SudokuNumber>);
