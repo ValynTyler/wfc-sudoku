@@ -17,11 +17,11 @@ impl SudokuGrid {
         self.0[row][col] = SudokuCell(value);
     }
 
-    pub fn check_row(&self, row: usize) -> Result<(), Vec<SudokuNumber>> {
+    pub fn check_row(&self, row_idx: usize) -> Result<(), Vec<SudokuNumber>> {
         let mut freq = [ 0; 10 ];
         let mut errs = vec![];
 
-        for cell in self.0[row] {
+        for cell in self.0[row_idx] {
             if let Some(n) = cell.0 {
                 freq[usize::from(n)] += 1;
             }
