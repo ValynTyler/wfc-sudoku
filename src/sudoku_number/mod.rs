@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub enum SudokuNumber {
     _1,
     _2,
@@ -13,10 +13,26 @@ pub enum SudokuNumber {
     _9,
 }
 
-impl TryFrom::<u8> for SudokuNumber {
+impl From::<SudokuNumber> for usize {
+    fn from(value: SudokuNumber) -> Self {
+        match value {
+            SudokuNumber::_1 => 1,
+            SudokuNumber::_2 => 2,
+            SudokuNumber::_3 => 3,
+            SudokuNumber::_4 => 4,
+            SudokuNumber::_5 => 5,
+            SudokuNumber::_6 => 6,
+            SudokuNumber::_7 => 7,
+            SudokuNumber::_8 => 8,
+            SudokuNumber::_9 => 9,
+        }
+    }
+}
+
+impl TryFrom::<usize> for SudokuNumber {
     type Error = ();
 
-    fn try_from(value: u8) -> Result<Self, Self::Error> {
+    fn try_from(value: usize) -> Result<Self, Self::Error> {
         match value {
             1 => Ok(Self::_1),
             2 => Ok(Self::_2),
