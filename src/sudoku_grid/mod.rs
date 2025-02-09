@@ -11,8 +11,8 @@ impl SudokuGrid {
         row: usize,
         value: Option<SudokuNumber>
     ) {
-        let col = col % 9 - 1;
-        let row = row % 9 - 1;
+        let col = (col - 1) % 9;
+        let row = (row - 1) % 9;
 
         self.0[row][col] = SudokuCell(value);
     }
