@@ -1,1 +1,3 @@
-pub struct SudokuGrid(pub [[Option<u8>; 9]; 9]);
+use crate::sudoku_cell::SudokuCell;
+
+pub struct SudokuGrid(pub [[SudokuCell; 9]; 9]);
