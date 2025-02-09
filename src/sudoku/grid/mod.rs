@@ -49,6 +49,11 @@ impl SudokuGrid {
 
         self.0[row][col] = SudokuCell(value);
     }
+
+    pub fn check(&self) {
+
+        let jeff = self.get_region(0, RegionType::Row).check();
+    }
 }
 
 impl Default for SudokuGrid {

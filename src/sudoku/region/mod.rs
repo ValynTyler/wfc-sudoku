@@ -9,11 +9,11 @@ pub enum RegionType {
 pub struct Region(pub Vec<SudokuCell>);
 
 impl Region {
-    pub fn check(self) -> Result<(), Vec<SudokuNumber>> {
-        let mut freq = [ 0; 10 ];
-        let mut errs = vec![];
+    pub fn get_repetitions(&self) -> Vec<SudokuNumber> {
+        let mut freq: [ usize; 10 ] = [ 0; 10 ];
+        let mut reps = vec![];
 
-        for cell in self.0 {
+        for cell in &self.0 {
             if let Some(n) = cell.0 {
                 freq[usize::from(n)] += 1;
             }
@@ -21,13 +21,18 @@ impl Region {
 
         for (idx, num) in freq.into_iter().enumerate() {
             if num > 1 {
-                errs.push(SudokuNumber::try_from(idx).unwrap());
+                reps.push(SudokuNumber::try_from(idx).unwrap());
             }
         }
 
-        match errs.len() {
+        reps
+    }
+
+    pub fn check(&self) -> Result<(), Vec<SudokuNumber>> {
+        let reps = self.get_repetitions();
+        match reps.len() {
             0 => Ok(()),
-            _ => Err(errs),
+            _ => Err(reps),
         }
     }
 }
