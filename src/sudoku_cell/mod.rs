@@ -7,6 +7,7 @@ pub struct SudokuCell(pub Option<SudokuNumber>);
 
 #[macro_export]
 macro_rules! cell {
+    () => { None };
     ($x:expr) => {
         match $x {
             1 => Some(SudokuNumber::_1),
