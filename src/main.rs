@@ -1,4 +1,4 @@
-use wfc_sudoku::{cell, sudoku::grid::SudokuGrid, sudoku::number::SudokuNumber};
+use wfc_sudoku::{cell, sudoku::{grid::SudokuGrid, number::SudokuNumber, region::RegionType}};
 
 fn main() {
     let mut grid = SudokuGrid::default();
@@ -35,5 +35,13 @@ fn main() {
                 println!("{}", num);
             }
         }
+    }
+
+    for i in 0..9 {
+        grid.get_region(i, RegionType::Box)
+            .iter()
+            .for_each(|cell| print!("{}", cell));
+
+        println!();
     }
 }

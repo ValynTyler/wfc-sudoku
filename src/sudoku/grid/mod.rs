@@ -11,6 +11,31 @@ impl SudokuGrid {
         self.0[row][col].clone()
     }
 
+    pub fn get_region(&self, index: usize, region_type: RegionType) -> Vec<SudokuCell> {
+        match region_type {
+            RegionType::Box => {
+                let row_offset = (index / 3) * 3;
+                let col_offset = (index % 3) * 3;
+
+                let box_shape: Vec<_> = vec![
+                    (0, 0), (0, 1), (0, 2),
+                    (1, 0), (1, 1), (1, 2),
+                    (2, 0), (2, 1), (2, 2),
+                ];
+
+                box_shape
+                    .iter()
+                    .map(|pos| self.get_cell(pos.0 + row_offset, pos.1 + col_offset))
+                    .collect::<Vec<_>>()
+            }
+            RegionType::Row => self.0[index].to_vec(),
+            RegionType::Column => self.0
+                .iter()
+                .map(|row| row[index])
+                .collect::<Vec<_>>()
+        }
+    }
+
     pub fn set_cell(
         &mut self,
         row: usize,
