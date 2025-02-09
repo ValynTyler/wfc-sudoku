@@ -22,21 +22,37 @@ impl Default for SudokuGrid {
 
 impl Display for SudokuGrid {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        for (idx, row) in self.0.iter().enumerate() {
-            for (index, cell) in row.iter().enumerate() {
-                write!(f, "{}", cell)?;
-                if (index + 1) % 3 == 0 && (index + 1) < 9 {
-                    write!(f, " | ")?;
-                }
-            }
-            writeln!(f)?;
-            if (idx + 1) % 3 == 0 && (idx + 1) < 9 {
-                for _ in 0..15 {
-                    write!(f, "-")?;
-                }
-                writeln!(f)?;
-            }
+        fn grid_line() -> String {
+            format!("{}+", "+-------".repeat(3))
         }
+
+        fn number_line(row: &[SudokuCell]) -> String {
+            format!("| {}|", row
+                .iter()
+                .enumerate()
+                .map(|(index, cell)| {
+                    match index == 3 || index == 6  {
+                        true => format!("| {} ", cell),
+                        false => format!("{} ", cell),
+                    }
+                })
+                .collect::<String>()
+            )
+        }
+
+        writeln!(f, "{}", grid_line())?;
+        writeln!(f, "{}", number_line(&self.0[0]))?;
+        writeln!(f, "{}", number_line(&self.0[1]))?;
+        writeln!(f, "{}", number_line(&self.0[2]))?;
+        writeln!(f, "{}", grid_line())?;
+        writeln!(f, "{}", number_line(&self.0[3]))?;
+        writeln!(f, "{}", number_line(&self.0[4]))?;
+        writeln!(f, "{}", number_line(&self.0[5]))?;
+        writeln!(f, "{}", grid_line())?;
+        writeln!(f, "{}", number_line(&self.0[6]))?;
+        writeln!(f, "{}", number_line(&self.0[7]))?;
+        writeln!(f, "{}", number_line(&self.0[8]))?;
+        write!(f, "{}", grid_line())?;
 
         Ok(())
     }
