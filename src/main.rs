@@ -15,11 +15,22 @@ fn main() {
 
     grid.set_cell(5, 8, cell!(8));
 
+    grid.set_cell(8, 2, cell!(2));
+
     println!("{}", grid);
 
     for idx in 0..9 {
         if let Err(e) = grid.check_row(idx) {
             println!("Err: Repetition on line {}. Repeating numbers:", idx + 1);
+            for num in e {
+                println!("{}", num);
+            }
+        }
+    }
+
+    for idx in 0..9 {
+        if let Err(e) = grid.check_col(idx) {
+            println!("Err: Repetition on column {}. Repeating numbers:", idx + 1);
             for num in e {
                 println!("{}", num);
             }

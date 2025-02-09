@@ -38,6 +38,28 @@ impl SudokuGrid {
             _ => Err(errs),
         }
     }
+
+    pub fn check_col(&self, col_idx: usize) -> Result<(), Vec<SudokuNumber>> {
+        let mut freq = [ 0; 10 ];
+        let mut errs = vec![];
+
+        for i in 0..9 {
+            if let Some(n) = self.0[i][col_idx].0 {
+                freq[usize::from(n)] += 1;
+            }
+        }
+
+        for (idx, num) in freq.into_iter().enumerate() {
+            if num > 1 {
+                errs.push(SudokuNumber::try_from(idx).unwrap());
+            }
+        }
+
+        match errs.len() {
+            0 => Ok(()),
+            _ => Err(errs),
+        }
+    }
 }
 
 impl Default for SudokuGrid {
