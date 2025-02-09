@@ -5,10 +5,16 @@ use crate::{sudoku_cell::SudokuCell, sudoku_number::SudokuNumber};
 pub struct SudokuGrid(pub [[SudokuCell; 9]; 9]);
 
 impl SudokuGrid {
-    pub fn set_cell(&mut self, pos: (usize, usize), value: Option<SudokuNumber>) -> Result<(), ()> {
-        self.0[pos.1 - 1][pos.0 - 1] = SudokuCell(value);
+    pub fn set_cell(
+        &mut self,
+        col: usize,
+        row: usize,
+        value: Option<SudokuNumber>
+    ) {
+        let col = col % 9 - 1;
+        let row = row % 9 - 1;
 
-        Ok(())
+        self.0[row][col] = SudokuCell(value);
     }
 }
 
