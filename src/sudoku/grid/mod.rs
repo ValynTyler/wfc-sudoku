@@ -11,7 +11,7 @@ impl SudokuGrid {
         self.0[row][col].clone()
     }
 
-    pub fn get_region(&self, index: usize, region_type: RegionType) -> Vec<SudokuCell> {
+    pub fn get_region(&self, index: usize, region_type: RegionType) -> Region {
         match region_type {
             RegionType::Box => {
                 let row_offset = (index / 3) * 3;
@@ -23,16 +23,18 @@ impl SudokuGrid {
                     (2, 0), (2, 1), (2, 2),
                 ];
 
-                box_shape
+                Region(box_shape
                     .iter()
                     .map(|pos| self.get_cell(pos.0 + row_offset, pos.1 + col_offset))
                     .collect::<Vec<_>>()
+                )
             }
-            RegionType::Row => self.0[index].to_vec(),
-            RegionType::Column => self.0
+            RegionType::Row => Region(self.0[index].to_vec()),
+            RegionType::Column => Region(self.0
                 .iter()
                 .map(|row| row[index])
                 .collect::<Vec<_>>()
+            )
         }
     }
 
@@ -46,50 +48,6 @@ impl SudokuGrid {
         let row = row % 9;
 
         self.0[row][col] = SudokuCell(value);
-    }
-
-    pub fn check_row(&self, row_idx: usize) -> Result<(), Vec<SudokuNumber>> {
-        let mut freq = [ 0; 10 ];
-        let mut errs = vec![];
-
-        for cell in self.0[row_idx] {
-            if let Some(n) = cell.0 {
-                freq[usize::from(n)] += 1;
-            }
-        }
-
-        for (idx, num) in freq.into_iter().enumerate() {
-            if num > 1 {
-                errs.push(SudokuNumber::try_from(idx).unwrap());
-            }
-        }
-
-        match errs.len() {
-            0 => Ok(()),
-            _ => Err(errs),
-        }
-    }
-
-    pub fn check_col(&self, col_idx: usize) -> Result<(), Vec<SudokuNumber>> {
-        let mut freq = [ 0; 10 ];
-        let mut errs = vec![];
-
-        for i in 0..9 {
-            if let Some(n) = self.0[i][col_idx].0 {
-                freq[usize::from(n)] += 1;
-            }
-        }
-
-        for (idx, num) in freq.into_iter().enumerate() {
-            if num > 1 {
-                errs.push(SudokuNumber::try_from(idx).unwrap());
-            }
-        }
-
-        match errs.len() {
-            0 => Ok(()),
-            _ => Err(errs),
-        }
     }
 }
 

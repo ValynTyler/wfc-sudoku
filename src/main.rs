@@ -9,19 +9,17 @@ fn main() {
     grid.set_cell(1, 5, cell!(5));
     grid.set_cell(1, 7, cell!(9));
     grid.set_cell(1, 8, cell!(8));
-
     grid.set_cell(4, 7, cell!(8));
     grid.set_cell(4, 8, cell!(8));
-
     grid.set_cell(5, 8, cell!(8));
-
     grid.set_cell(8, 2, cell!(2));
+    grid.set_cell(2, 4, cell!(5));
 
     println!("{}", grid);
 
     for idx in 0..9 {
-        if let Err(e) = grid.check_row(idx) {
-            println!("Err: Repetition on line {}. Repeating numbers:", idx + 1);
+        if let Err(e) = grid.get_region(idx, RegionType::Row).check() {
+            println!("Err: Repetition on row {}. Repeating numbers:", idx + 1);
             for num in e {
                 println!("{}", num);
             }
@@ -29,7 +27,7 @@ fn main() {
     }
 
     for idx in 0..9 {
-        if let Err(e) = grid.check_col(idx) {
+        if let Err(e) = grid.get_region(idx, RegionType::Column).check() {
             println!("Err: Repetition on column {}. Repeating numbers:", idx + 1);
             for num in e {
                 println!("{}", num);
@@ -37,11 +35,12 @@ fn main() {
         }
     }
 
-    for i in 0..9 {
-        grid.get_region(i, RegionType::Box)
-            .iter()
-            .for_each(|cell| print!("{}", cell));
-
-        println!();
+    for idx in 0..9 {
+        if let Err(e) = grid.get_region(idx, RegionType::Box).check() {
+            println!("Err: Repetition in box {}. Repeating numbers:", idx + 1);
+            for num in e {
+                println!("{}", num);
+            }
+        }
     }
 }
