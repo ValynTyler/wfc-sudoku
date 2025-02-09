@@ -1,10 +1,16 @@
 use std::fmt::Display;
 
-use super::{cell::SudokuCell, number::SudokuNumber};
+use crate::sudoku::cell::*;
+use crate::sudoku::number::*;
+use crate::sudoku::region::*;
 
 pub struct SudokuGrid(pub [[SudokuCell; 9]; 9]);
 
 impl SudokuGrid {
+    pub fn get_cell(&self, row: usize, col: usize) -> SudokuCell {
+        self.0[row][col].clone()
+    }
+
     pub fn set_cell(
         &mut self,
         row: usize,
